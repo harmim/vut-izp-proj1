@@ -1,8 +1,16 @@
 CLFAGS=-std=c99 -Wall -Werror -Wextra
 CC=gcc
-MAIN=proj1.c
+PROJ=proj1
+TESTS=./test.sh
 
-.PHONY: main
+.PHONY: main tests clean
 
-main: $(MAIN)
-	$(CC) $(CLFAGS) $(MAIN) -o proj1
+main: $(PROJ).c
+	$(CC) $(CLFAGS) $(PROJ).c -o $(PROJ)
+
+tests: $(TESTS)
+	$(TESTS)
+
+clean:
+	rm -rf $(PROJ)
+

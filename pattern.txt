@@ -1,0 +1,11 @@
+00000000  48 65 6c 6c 6f 2c 20 77  6f 72 6c 64 21 20 41 68  |Hello, world! Ah|
+00000010  6f 6a 20 73 76 65 74 65  21 0a                    |oj svete!.      |
+00000000  41 68 6f 6a 0a                                    |Ahoj.           |
+0000000e  41 68 6f 6a 20                                    |Ahoj            |
+48656c6c6f0a
+ff00
+Ahoj
+Slovo
+Hell
+00ff00ff
+

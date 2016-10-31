@@ -6,3 +6,4 @@ set(CMAKE_C_FLAGS "-std=c99 -Wall -Wextra -Werror")
 
 set(SOURCE_FILES proj1.c)
 add_executable(proj1 ${SOURCE_FILES})
+

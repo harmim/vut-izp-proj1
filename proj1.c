@@ -56,14 +56,15 @@ bool str_eq(const char *s1, const char *s2)
  * @see binary_to_text
  * @param char_values array of last 16 chars
  * @param address address of last byte
+ * @param skip number of chars that was skipped or -1 for undefined 
  */
-void print_binary_to_text_line(int *char_values, const int address)
+void print_binary_to_text_line(int *char_values, const int address, const int skip)
 {
 	// print this line only if address is not 0 and if first char is not empty
 	if (address != 0 && char_values[0] != 0) {
 		int rm16 = address % 16, i = 0;
 		// print address of first byte in this line to stdout
-		printf("%08x  ", address - (rm16 == 0 ? 16 : rm16));
+		printf("%08x  ", address + (skip != -1 ? skip : 0) - (rm16 == 0 ? 16 : rm16));
 
 		// print hexa value of each byte or space if there is no one to stdout
 		for (i = 0; i < 16; i++) {
@@ -71,6 +72,11 @@ void print_binary_to_text_line(int *char_values, const int address)
 				printf("   ");
 			} else {
 				printf("%02x ", char_values[i]);
+			}
+
+			// two spaces after 8. char
+			if (i == 7) {
+				putchar(' ');
 			}
 		}
 
@@ -121,7 +127,7 @@ bool binary_to_text(const int skip, const int number_of_chars)
 
 			// array for 16 bytes is full, so print this line to stdout
 			if (address % 16 == 0) {
-				print_binary_to_text_line(char_values, address);
+				print_binary_to_text_line(char_values, address, skip);
 			}
 
 			// add char from stdin to array for actual row to index 0-15
@@ -136,7 +142,7 @@ bool binary_to_text(const int skip, const int number_of_chars)
 		address++;
 	}
 	// print last series to stdout, if there are any chars
-	print_binary_to_text_line(char_values, address);
+	print_binary_to_text_line(char_values, address, skip);
 
 	return true;
 }
@@ -259,9 +265,11 @@ bool text_to_binary()
 			first_byte = char_value;
 		} else {
 			// if number of processed chars is even then, print whole byte to stdout converted from hexadecimal
+			// then set -1 to first_byte variable
 			byte_string[0] = first_byte;
 			byte_string[1] = char_value;
 			putchar(strtol(byte_string, (char **) NULL, 16));
+			first_byte = -1;
 		}
 	}
 
