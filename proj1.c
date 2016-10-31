@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+#define PRINT_ERR(s, ...) fprintf(stderr,  s "\n", __VA_ARGS__ )
+
 /**
  * constant string - help
  */
@@ -256,7 +258,7 @@ bool text_to_binary()
 		}
 		// if current char is not hexadigit, print error to stderr and return false
 		if ( ! isxdigit(char_value)) {
-			fprintf(stderr, "Char %c is not hexadecimal digit.\n", char_value);
+			PRINT_ERR("Char %c is not hexadecimal digit.", char_value);
 			return false;
 		}
 		// if number of processed chars is odd (find out using bitwise and operator)
@@ -281,6 +283,26 @@ bool text_to_binary()
 	}
 
 	return true;
+}
+
+
+/**
+ * converts value of argument in string format to int
+ * if in value there is non-convertible part, print it to stderr
+ *
+ * @param value value of argument in string format (from argv)
+ * @param arg name of argument that value belongs to
+ * @return converted int value or -1 if in value there is non-convertible part
+ */
+int value_of_argument_to_int(const char *value, const char arg) {
+	char *endptr = NULL;
+	int number = strtol(value, &endptr, 10);
+	if (*endptr) {
+		PRINT_ERR("Value of argument -%c must be number but there is non-convertible part: %s.", arg, endptr);
+		return -1;
+	}
+
+	return number;
 }
 
 
@@ -316,10 +338,13 @@ bool process_input_data(const int argc, const char *argv[], bool *help)
 			}
 
 			// convert argument to int and do validation
-			int number = strtol(argv[2], (char **) NULL, 10);
+			int number;
+			if ((number = value_of_argument_to_int(argv[2], 'S')) == -1) {
+				return false;
+			}
 			if (number <= 0 || number >= 200) {
-				*help = true;
-				return true;
+				PRINT_ERR("Vlue of argument -S must be number in range (0;200), given %i.", number);
+				return false;
 			}
 
 			return binary_to_text_string(number);
@@ -331,14 +356,17 @@ bool process_input_data(const int argc, const char *argv[], bool *help)
 			// argument -s and -n must be followed by number
 			if (argc == 2) {
 				*help = true;
-				return  true;
+				return true;
 			}
 
 			// convert argument to int and do validation
-			int number = strtol(argv[2], (char **) NULL, 10);
+			int number;
+			if ((number = value_of_argument_to_int(argv[2], option_s ? 's' : 'n')) == -1) {
+				return false;
+			}
 			if (number < 0) {
-				*help = true;
-				return true;
+				PRINT_ERR("Value of argument -%c must be number greater than 0, given %i.", option_s ? 's' : 'n', number);
+				return false;
 			}
 
 			// there is not other arguments
@@ -355,13 +383,19 @@ bool process_input_data(const int argc, const char *argv[], bool *help)
 			}
 
 			// convert argument to int and do validation
-			int number2 = strtol(argv[4], (char **) NULL, 10);
+			int number2;
+			if ((number2 = value_of_argument_to_int(argv[4], option2_s ? 's' : 'n')) == -1) {
+				return false;
+			}
 			if (number2 < 0) {
-				*help = true;
-				return true;
+				PRINT_ERR("Value of argument -%c must be number greater than 0, given %i.", option2_s ? 's' : 'n', number2);
+				return false;
 			}
 
-			return binary_to_text(option_s ? number : option2_s ? number2 : -1, option_n ? number : option2_n ? number2 : -1);
+			return binary_to_text(
+					option_s ? number : option2_s ? number2 : -1,
+					option_n ? number : option2_n ? number2 : -1
+				);
 		}
 
 		// unknown option

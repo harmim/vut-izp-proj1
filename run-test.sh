@@ -11,7 +11,8 @@ if [ -f output.txt ]; then
 	rm output.txt
 fi
 
-bash tests.txt 
+chmod +x tests.sh
+./tests.sh
 
 if [ ! -f output.txt ]; then
 	echo "Nastala chyba pri spusteni testu!"
@@ -19,5 +20,3 @@ if [ ! -f output.txt ]; then
 fi
 
 diff -u output.txt pattern.txt
-
-make clean
