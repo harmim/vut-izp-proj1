@@ -27,7 +27,11 @@
 *.i*86
 *.x86_64
 *.hex
+/proj1
 
 # Debug files
 *.dSYM/
 *.su
+
+# Clion
+/.idea/
