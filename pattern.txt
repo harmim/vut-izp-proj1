@@ -8,4 +8,3 @@ Ahoj
 Slovo
 Hell
 00ff00ff
-

@@ -21,4 +21,3 @@ fi
 diff -u output.txt pattern.txt
 
 make clean
-

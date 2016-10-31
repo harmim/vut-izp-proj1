@@ -13,4 +13,3 @@ tests: $(TESTS)
 
 clean:
 	rm -rf $(PROJ)
-
