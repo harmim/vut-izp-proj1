@@ -294,7 +294,8 @@ bool text_to_binary()
  * @param arg name of argument that value belongs to
  * @return converted int value or -1 if in value there is non-convertible part
  */
-int value_of_argument_to_int(const char *value, const char arg) {
+int value_of_argument_to_int(const char *value, const char arg) 
+{
 	char *endptr = NULL;
 	int number = strtol(value, &endptr, 10);
 	if (*endptr) {
