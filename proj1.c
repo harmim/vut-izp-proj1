@@ -224,6 +224,7 @@ bool binary_to_text_string(const int lenght)
 			} else {
 				if (print_new_line) {
 					putchar('\n');
+					print_new_line = false;
 				}
 
 				// erase the array and set index to -1, so next iteration starts with the new line
@@ -233,6 +234,10 @@ bool binary_to_text_string(const int lenght)
 				i = -1;
 			}
 		}
+	}
+
+	if (print_new_line) {
+		putchar('\n');
 	}
 
 	return true;

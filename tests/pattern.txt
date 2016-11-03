@@ -34,3 +34,15 @@ Value of argument -s must be number but there is non-convertible part: -n.
 00000000  41 68 6f 6a 2c 20 6a 61                           |Ahoj, ja        |
 00000003  6a 2c 20 6a 61 6b 20 73  65 20 6d c3 a1 c5 a1 3f  |j, jak se m....?|
 00000013  0a                                                |.               |
+Hello, world!
+Ahoj svete!
+ABCD
+Hello
+00000000  0a                                                |.               |
+0a
+
+a
+a
+a
+a
+Lorem ipsum
