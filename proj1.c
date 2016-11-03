@@ -122,7 +122,7 @@ bool binary_to_text(const int skip, const int number_of_chars)
 		// check if it was already skipped or skip is undefined argument or address is equal skip
 		if (skipped || skip == -1 || address == skip) {
 			// if address is equal skip then skip all previous bytes, set address to 0 and flag skipped to true
-			if (address == skip) {
+			if ( ! skipped && address == skip) {
 				address = 0;
 				skipped = true;
 			}

@@ -26,3 +26,11 @@ amet,
 00000010  6f 75 c4 8d 6b c3 bd 20  6b c5 af c5 88 20 c3 ba  |ou..k.. k.... ..|
 00000020  70 c4 9b 6c 20 c4 8f c3  a1 62 65 6c 73 6b c3 a9  |p..l ....belsk..|
 00000030  20 c3 b3 64 79 2e 0a                              | ..dy..         |
+00000000  41 68 6f 6a 2c 20 6a 61  6b 20 73 65 20 6d c3 a1  |Ahoj, jak se m..|
+00000010  c5 a1 3f 0a                                       |..?.            |
+Value of argument -s must be number but there is non-convertible part: -n.
+00000005  20 6a 61 6b 20 73 65 20  6d c3 a1 c5 a1 3f 0a     | jak se m....?. |
+00000005  20 6a 61 6b 20                                    | jak            |
+00000000  41 68 6f 6a 2c 20 6a 61                           |Ahoj, ja        |
+00000003  6a 2c 20 6a 61 6b 20 73  65 20 6d c3 a1 c5 a1 3f  |j, jak se m....?|
+00000013  0a                                                |.               |

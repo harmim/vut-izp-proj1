@@ -19,3 +19,9 @@ echo 'Příliš žluťoučký kůň úpěl ďábelské ódy.' | ${PROJ1} -x | ${
 printf 'Lorem ipsum\0dolor\n\0sit\n\0\namet,\n\0 consectetur adipiscing elit.\n\n\n' | ${PROJ1} -S 4 >> output.txt
 printf 'Lorem ipsum\0dolor\n\0sit\n\0\namet,\n\0 consectetur adipiscing elit.\n\n\n' | ${PROJ1} -S 4 | ${PROJ1} -x | ${PROJ1} -r >> output.txt
 echo 'Příliš žluťoučký kůň úpěl ďábelské ódy.' | ${PROJ1} >> output.txt
+echo 'Ahoj, jak se máš?' | ${PROJ1} >> output.txt
+echo 'Ahoj, jak se máš?' | ${PROJ1} -s -n 2>> output.txt
+echo 'Ahoj, jak se máš?' | ${PROJ1} -s 5 >> output.txt
+echo 'Ahoj, jak se máš?' | ${PROJ1} -s 5 -n 5 >> output.txt
+echo 'Ahoj, jak se máš?' | ${PROJ1} -n 8 >> output.txt
+echo 'Ahoj, jak se máš?' | ${PROJ1} -n 200000 -s 3 >> output.txt
