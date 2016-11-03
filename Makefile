@@ -1,16 +1,23 @@
 CLFAGS=-std=c99 -Wall -Werror -Wextra
 CC=gcc
 PROJ=proj1
-TESTS=./run-test.sh
+TEST=tests.sh
+TEST_OUTPUT=output.txt
+TEST_PATTERN=pattern.txt
 
-.PHONY: main tests clean
+.PHONY: tests clean
 
-main: $(PROJ).c
+$(PROJ): $(PROJ).c
 	$(CC) $(CLFAGS) $(PROJ).c -o $(PROJ)
 
-tests: $(TESTS)
-	chmod +x $(TESTS)
-	$(TESTS)
+tests/$(TEST_OUTPUT): tests/$(TEST) tests/$(TEST_PATTERN)
+	rm -f tests/$(TEST_OUTPUT)
+	chmod +x tests/$(TEST)
+	cd tests && ./$(TEST)
+
+tests: $(PROJ) tests/$(TEST_OUTPUT)
+	diff -u tests/$(TEST_OUTPUT) tests/$(TEST_PATTERN)
 
 clean:
-	rm -rf $(PROJ)
+	rm -f $(PROJ)
+	rm -f tests/output.txt

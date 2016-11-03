@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#define PRINT_ERR(s, ...) fprintf(stderr,  s "\n", __VA_ARGS__ )
+#define PRINT_ERR(s, ...) fprintf(stderr,  s "\n", __VA_ARGS__)
 
 /**
  * constant string - help
@@ -21,7 +21,7 @@ const char usage_string[] =
 	"		[-n N]	(the maximum length of input bytes for processing)\n"
 	"	proj1 -x	(input data are converted into hexa form to one line)\n"
 	"	proj1 -S N	(print a sequence of binary input, which look like a\n"
-	"			string of lenght greater or equal N)\n"
+	"			string of lenght greater than or equal to N)\n"
 	"\n"
 	"  Convert text input to binary:\n"
 	"	proj1 -r	(expects the input sequence of hexadecimal digits\n"
@@ -101,7 +101,7 @@ void print_binary_to_text_line(int *char_values, const int address, const int sk
 
 
 /**
- * process input binary data from stdin
+ * process input binary data from stdin (without arguments)
  * the output format is a sequence of lines where where each line describes a series of 16 bytes from the input
  * each line is in format: AAAAAAAA  xx xx xx xx xx xx xx xx  xx xx xx xx xx xx xx xx  |bbbbbbbbbbbbbbbb|
  * - AAAAAAAA address of first byte in each series (it is hexa number, first byte is 00000000)
@@ -109,8 +109,8 @@ void print_binary_to_text_line(int *char_values, const int address, const int sk
  * - b is printable form of each byte, if byte is not printable, prints . (dot)
  * if series contains less then 16 bytes, instandof missing xx values it prints spaces
  *
- * @param skip number of chars to skip or -1 when it is undefined
- * @param number_of_chars maximum length of input bytes to process or -1 when it is undefined
+ * @param skip number of chars to skip or -1 when it is undefined (-s)
+ * @param number_of_chars maximum length of input bytes to process or -1 when it is undefined (-n)
  * @return true if input data was processed successfully, false otherwise
  */
 bool binary_to_text(const int skip, const int number_of_chars)
@@ -135,7 +135,7 @@ bool binary_to_text(const int skip, const int number_of_chars)
 			// add char from stdin to array for actual row to index 0-15
 			char_values[address % 16] = char_value;
 
-			// if argument number_of_chars is defined and its value is greater or equal to position of last
+			// if argument number_of_chars is defined and its value is greater than or equal to position of last
 			// byte, stop read from stdin
 			if (number_of_chars != -1 && address + 1 >= number_of_chars) {
 				break;
@@ -151,7 +151,7 @@ bool binary_to_text(const int skip, const int number_of_chars)
 
 
 /**
- * process input binary data from stdin
+ * process input binary data from stdin (-x)
  * input data are converted into hexadecimal form to one line
  * each output byte is two digits hexadeciaml number
  *
@@ -172,12 +172,12 @@ bool binary_to_text_one_line()
 
 
 /**
- * process input binary data from stdin
+ * process input binary data from stdin (-S)
  * prints a sequence of binary input, which look like a string
  * each string is print to new line
  * string is sequence of printable and blank chars
  *
- * @param lenght output string must be greater or equal this lenght
+ * @param lenght output string must be greater than or equal to this lenght
  * @return true if input data was processed successfully, false otherwise
  */
 bool binary_to_text_string(const int lenght)
@@ -227,7 +227,7 @@ bool binary_to_text_string(const int lenght)
 				}
 
 				// erase the array and set index to -1, so next iteration starts with the new line
-				for (int j = 0; j < lenght; j++) {
+				for (j = 0; j < lenght; j++) {
 					char_values[j] = 0;
 				}
 				i = -1;
@@ -240,7 +240,7 @@ bool binary_to_text_string(const int lenght)
 
 
 /**
- * process input text data from stdin
+ * process input text data from stdin (-r)
  * expects the input sequence of hexadecimal digits and convert these into a binary format
  * whiite-space chars are ignored
  *
@@ -261,7 +261,7 @@ bool text_to_binary()
 			PRINT_ERR("Char %c is not hexadecimal digit.", char_value);
 			return false;
 		}
-		// if number of processed chars is odd (find out using bitwise and operator)
+		// if number of processed chars is odd (find out using bitwise AND operator)
 		// then store char to first_byte
 		if (++i & 1) {
 			first_byte = char_value;
@@ -417,7 +417,7 @@ int main(const int argc, const char *argv[])
 		// to be listed help/usage string
 		printf("usage:\n%s\n", usage_string);
 	}
-	// return value of this program, of this main function,
+	// return value of this program (of this main function)
 	// depends on return value of function process_input_data
-	return result ? 0 : 1;
+	return result ? EXIT_SUCCESS : EXIT_FAILURE;
 }
