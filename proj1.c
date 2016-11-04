@@ -1,5 +1,5 @@
 /**
- * @name proj1
+ * @name Projekt 1 - Práce s textem
  * @author Dominik Harmim <xharmi00@stud.fit.vutbr.cz>
  */
 
