@@ -63,14 +63,14 @@ bool str_eq(const char *s1, const char *s2)
 void print_binary_to_text_line(int *char_values, const int address, const int skip)
 {
 	// print this line only if address is not 0 and if first char is not empty
-	if (address != 0 && char_values[0] != 0) {
+	if (address != 0 && char_values[0] != -1) {
 		int rm16 = address % 16, i = 0;
 		// print address of first byte in this line to stdout
 		printf("%08x  ", address + (skip != -1 ? skip : 0) - (rm16 == 0 ? 16 : rm16));
 
 		// print hexa value of each byte or space if there is no one to stdout
 		for (i = 0; i < 16; i++) {
-			if (char_values[i] == 0) {
+			if (char_values[i] == -1) {
 				printf("   ");
 			} else {
 				printf("%02x ", char_values[i]);
@@ -86,14 +86,14 @@ void print_binary_to_text_line(int *char_values, const int address, const int sk
 		// at last erase array for last 16 chars (char_values)
 		printf(" |");
 		for (i = 0; i < 16; i++) {
-			if (isprint(char_values[i])) {
-				putchar(char_values[i]);
-			} else if (char_values[i] == 0) {
+			if (char_values[i] == -1) {
 				putchar(' ');
+			} else if (isprint(char_values[i])) {
+				putchar(char_values[i]);
 			} else {
 				putchar('.');
 			}
-			char_values[i] = 0;
+			char_values[i] = -1;
 		}
 		printf("|\n");
 	}
@@ -115,7 +115,7 @@ void print_binary_to_text_line(int *char_values, const int address, const int sk
  */
 bool binary_to_text(const int skip, const int number_of_chars)
 {
-	int char_value, address = 0, char_values[16] = {0};
+	int char_value, address = 0, char_values[16] = {[0 ... 15] = -1};
 	bool skipped = false;
 
 	while ((char_value = getchar()) != EOF) {
@@ -138,6 +138,7 @@ bool binary_to_text(const int skip, const int number_of_chars)
 			// if argument number_of_chars is defined and its value is greater than or equal to position of last
 			// byte, stop read from stdin
 			if (number_of_chars != -1 && address + 1 >= number_of_chars) {
+				address++;
 				break;
 			}
 		}
